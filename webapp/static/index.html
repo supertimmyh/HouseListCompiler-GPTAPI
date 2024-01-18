@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>House Listing Data Compiler</title>
-    <link rel="stylesheet" href="./styles.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="/ui/styles.css"> <!-- Link to your CSS file -->
 </head>
 <body>
     <header>
         <h1>House Listing Data Compiler for Social Media</h1>
-        <img src="/images/openplex-logo.png" alt="OpenPlex"> <!-- Replace with your house icon -->
+        <img src="/ui/images/openplex-logo.png" alt="OpenPlex"> <!-- Replace with your house icon -->
     </header>
     <main>
         <section>
@@ -22,6 +22,17 @@
             <button onclick="location.href='/'">Demo</button> <!-- Replace with your demo link -->
         </section>
         <section>
+            <h2>Process Listing</h2>
+            <form id="listingForm">
+                <!-- Add your input fields here. -->
+                <label for="inputField">Input:</label>
+                <input type="text" id="urlField" name="url">
+                <!-- Add other fields as necessary -->
+                <button type="submit">Submit</button>
+            </form>
+            <div id="result"></div>
+        </section>
+        <section>
             <h2>Learn More</h2>
             <button onclick="location.href='https://github.com/your-repo'">GitHub Repository</button> <!-- Replace with your GitHub repo link -->
         </section>
@@ -31,3 +42,32 @@
     </footer>
 </body>
 </html>
+<script>
+    document.getElementById('listingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => {data[key] = value});
+
+        fetch('/process-listing/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('result').textContent = 'Error: ' + error.message;
+        });
+    });
+</script>

@@ -1,0 +1,37 @@
+openapi: 3.0.1
+info:
+  title: House Listing Compiler API
+  description: API for compiling and managing house listings.
+  version: '1.0.0'
+servers:
+  - url: https://your-api-url.com
+paths:
+  /process-listing/:
+    post:
+      operationId: processListing
+      summary: Processes a house listing URL and returns compiled data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: URL of the house listing to be processed.
+      responses:
+        '200':
+          description: Successfully processed listing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  compiledData:
+                    type: object
+                    description: The compiled data of the house listing.
+        '404':
+          description: Listing information not found.
+        '500':
+          description: Internal server error.

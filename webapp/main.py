@@ -17,7 +17,7 @@ current_dir = dirname(abspath(__file__))
 static_path = join(current_dir, "static")
 
 app = FastAPI(title="Real Estate Listing API")
-app.mount("/ui", StaticFiles(directory=static_path), name="ui")
+app.mount("/ui", StaticFiles(directory=static_path, html=True), name="ui")
 
 class ListingRequest(BaseModel):
     url: str
