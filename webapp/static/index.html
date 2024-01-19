@@ -40,34 +40,34 @@
     <footer>
         <p>&copy; 2024 OpenPlex</p>
     </footer>
+    <script>
+        document.getElementById('listingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {data[key] = value});
+    
+            fetch('/process-listing/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').textContent = 'Error: ' + error.message;
+            });
+        });
+    </script>
 </body>
 </html>
-<script>
-    document.getElementById('listingForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        const data = {};
-        formData.forEach((value, key) => {data[key] = value});
-
-        fetch('/process-listing/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('result').textContent = 'Error: ' + error.message;
-        });
-    });
-</script>
