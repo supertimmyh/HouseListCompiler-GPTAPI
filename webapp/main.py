@@ -31,6 +31,11 @@ def root():
     html_path = join(static_path, "index.html")
     return FileResponse(html_path)
 
+# Privacy Policy for GPT Actions
+@app.get('/privacy-policy')
+def privacy_policy():
+    privacy_policy_path = join(static_path, "privacy_policy.html")
+    return FileResponse(privacy_policy_path)
 
 # listing data extraction start
 # Function to search for the Matterport URL
@@ -195,7 +200,7 @@ def find_listing_info(url):
         return None
 
 # The listing results for social media posting
-@app.post("/process-listing/")
+@app.post('/process-listing')
 async def process_listing(request: ListingRequest):
     try:
         results = find_listing_info(request.url)

@@ -4,9 +4,9 @@ info:
   description: API for compiling and managing house listings.
   version: '1.0.0'
 servers:
-  - url: https://your-api-url.com
+  - url: https://houselistcompiler-gptapi-d039efb20188.herokuapp.com
 paths:
-  /process-listing/:
+  /process-listing:
     post:
       operationId: processListing
       summary: Processes a house listing URL and returns compiled data.
@@ -30,8 +30,23 @@ paths:
                 properties:
                   compiledData:
                     type: object
+                    # Define more properties here if possible
                     description: The compiled data of the house listing.
         '404':
           description: Listing information not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
         '500':
           description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
