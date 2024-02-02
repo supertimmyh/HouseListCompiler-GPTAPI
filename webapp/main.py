@@ -165,9 +165,17 @@ def find_listing_info(url):
                 print("Script tag with ID '__NEXT_DATA__' not found")
 
             # Find the 3D tour link
-            tour_link = find_matterport_url(property_details)
-            print("3D Tour Link: ", tour_link) if tour_link else print("Unable to find 3D tour link")
-            results['tour_link'] = tour_link
+            matterport_url = find_matterport_url(property_details)
+            print("3D Tour Link: ", matterport_url) if matterport_url else print("Unable to find 3D tour link")
+            results['base_tour_link'] = matterport_url
+            # Splitting the URL by "&" and taking the first part
+            base_tour_link = matterport_url.split("&")[0]
+            # Checking if "m=" is in the URL, then appending the new parameters
+            if "m=" in base_tour_link:
+                auto_tour_link = base_tour_link + "&play=1&ts=1"
+            else:
+                auto_tour_link = base_tour_link
+            results['auto_tour_link'] = auto_tour_link
 
             # Find the house description
             house_descrp = find_property_description(property_details)
